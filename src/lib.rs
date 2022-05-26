@@ -1,4 +1,3 @@
-use num;
 pub mod simplepathgraph;
 pub mod staticgraph;
 

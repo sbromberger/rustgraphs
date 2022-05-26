@@ -19,7 +19,7 @@ impl<T: num::PrimInt + Sized> Vertex for T {
         self.to_usize()
     }
     fn get(index: usize) -> Option<T> {
-        Some(T::from(index)?)
+        T::from(index)
     }
 }
 

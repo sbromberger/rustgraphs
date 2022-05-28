@@ -10,9 +10,7 @@ pub struct SimplePathGraph {
 impl SimplePathGraph {
     pub fn new(n: usize) -> Result<Self, GraphError> {
         if n == 0 {
-            return Err(GraphError::GraphCreateError(String::from(
-                "Graph must have at least one vertex",
-            )));
+            return Err(GraphError::CreateError);
         }
         Ok(SimplePathGraph { nv: n })
     }
@@ -27,7 +25,12 @@ impl SimplePathGraph {
         }
         n
     }
+
+    pub fn edges(&self) -> SimplePathGraphEdgeIterator {
+        SimplePathGraphEdgeIterator::new(self)
+    }
 }
+
 impl Graph<usize> for SimplePathGraph {
     fn nv(&self) -> usize {
         self.nv
@@ -41,6 +44,13 @@ impl Graph<usize> for SimplePathGraph {
 
     fn out_neighbors(&self, v: usize) -> Vec<usize> {
         self.neighbors(v)
+    }
+    fn has_edge(&self, e: &(usize, usize)) -> bool {
+        e.1 < self.nv && e.0 + 1 == e.1
+    }
+
+    fn has_vertex(&self, v: &usize) -> bool {
+        *v < self.nv
     }
 }
 

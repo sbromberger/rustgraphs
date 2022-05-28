@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 graphmatrix = { path = "../graphmatrix" }
 num = "0.4.0"
+thiserror = "1.0.31"
+

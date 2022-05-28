@@ -1,9 +1,20 @@
+use std::io;
+use thiserror::Error;
+
 pub mod simplepathgraph;
 pub mod staticgraph;
 
-#[derive(Debug)]
+
+#[derive(Error, Debug)]
 pub enum GraphError {
-    GraphCreateError(String),
+    #[error("could not create graph")]
+    CreateError,
+    #[error("graph I/O error")]
+    IOError(#[from] io::Error),
+    #[error("graph parse error")]
+    ParseError,
+    #[error("graph index error")]
+    IndexError,
 }
 
 pub trait Vertex {
@@ -27,4 +38,6 @@ pub trait Graph<V: Vertex> {
     fn ne(&self) -> usize;
     fn out_neighbors(&self, v: V) -> Vec<V>;
     fn in_neighbors(&self, v: V) -> Vec<V>;
+    fn has_edge(&self, e: &(V, V)) -> bool;
+    fn has_vertex(&self, v: &V) -> bool;
 }
